@@ -1,0 +1,65 @@
+Homework 1: Tasks for aa1327
+Your personal task is to develop a system for restaurants and their chefs.
+
+Task 1: Configuration [4 marks]
+Configure the project to support the use of JSPs as view technology. JSPs must be configured to be placed inside folder src/main/webapp/WEB-INF/views/.
+
+Task 2: Domain Classes [13 marks]
+Create class co2103.hw1.domain.Chef. With the following private fields:
+
+String name
+String nationality
+String speciality
+int stars
+Generate necessary getters and setters. [7 marks]
+Create class co2103.hw1.domain.Restaurant. With the following private fields:
+
+int id
+String name
+String owner
+List<Chef> chefs
+Generate necessary getters and setters. [6 marks]
+Task 3: Controller (simple) [5 marks]
+Create controller co2103.hw1.controller.MainController [2 marks].
+
+Requests for URL "/" (POST and GET) should show the view start (the corresponding JSP already exists). [3 marks]
+Task 4: Controller, View, and Form [20 marks]
+Create field public static List<Restaurant> restaurants in class co2103.hw1.Hw1Application. Initialize the list inside class co2103.hw1.Hw1Application to contain one restaurant with two chefs. [4 marks]
+
+Create controller co2103.hw1.controller.RestaurantController and add methods with request mappings for the following behavior:
+
+GET requests for URL "/restaurants" should show view restaurants/list. [2 marks]
+Add the list of all restaurants from co2103.hw1.Hw1Application to the model as attribute restaurants. [2 marks]
+Create the corresponding JSP to list the name and owner of each restaurant followed by a link to URL "/chefs?restaurant={id of restaurant}", e.g., "/chefs?restaurant=3". [4 marks]
+Requests for URL "/newRestaurant" should show view restaurants/form. [3 marks] Create the corresponding JSP with a form with modelAttribute="restaurant" and action="/addRestaurant" and inputs for all fields of class Restaurant except for chefs. [5 marks]
+POST requests for URL "/addRestaurant" should add a new restaurant to the list of all restaurants in co2103.hw1.Hw1Application and redirect to /restaurants. [3 marks]
+Task 5: Controller, View, and Form with additional Parameter [33 marks]
+Create controller co2103.hw1.controller.ChefController and add methods with request mappings for the following behavior:
+
+GET requests for URL "/chefs" should show view chefs/list. [2 marks]
+Based on request parameter restaurant determine the corresponding restaurant from co2103.hw1.Hw1Application. [2 marks]
+Add the list of all chefs of that restaurant to the model as attribute chefs. [2 marks]
+Create the corresponding JSP for the view to list the name, nationality, speciality, and stars of each chef. [4 marks]
+At the end of the list in the JSP add a link to URL "/newChef?restaurant={id of restaurant whose chefs are listed}", e.g., "/newChef?restaurant=3". [4 marks]
+Requests for URL "/newChef" should show view chefs/form. [3 marks]
+Create the corresponding JSP with a form with modelAttribute="chef" and action="/addChef" and inputs for all fields of class Chef. [6 marks]
+Also add the request parameter restaurant with the ID of the current restaurant. [4 marks]
+POST requests for URL "/addChef" should add a new chef to the list of chefs of the restaurant identified by request parameter restaurant and then redirect to /restaurants. [6 marks]
+Task 6: Validation [25 marks]
+Set up a validator for class Restaurant and make it available in controller RestaurantController. [4 marks]
+
+When adding a new restaurant validate that
+
+The value of field id is unique within the list Hw1Application.restaurants. [3 marks]
+The value of field name is not empty. [2 marks]
+The value of field owner is not empty. [2 marks]
+In case of validation errors go back to the form and show error messages for each field in the form.
+Set up a validator for class Chef and make it available in controller ChefController. [4 marks]
+
+When adding a new chef validate that
+
+The value of field name is not empty. [2 marks]
+The value of field nationality is not empty. [2 marks]
+The value of field speciality is either "Starters", "Mains", or "Desserts". [3 marks]
+The value of field stars is between (including) 1 and 3. [3 marks]
+In case of validation errors go back to the form and show error messages for each field in the form.

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Homework 1: Tasks for aa1327</title>
+</head>
+
+<body>
+<h1>Homework 1: Tasks for aa1327</h1>
+
+<p>Your personal task is to develop a system for restaurants and their chefs.</p>
+
+<h2>Task 1: Configuration [4 marks]</h2>
+<p>Configure the project to support the use of JSPs as view technology. JSPs must be configured to be placed inside folder <code>src/main/webapp/WEB-INF/views/</code>.</p>
+
+<h2>Task 2: Domain Classes [13 marks]</h2>
+
+<p>Create class <code>co2103.hw1.domain.Chef</code>. With the following private fields:
+<ol>
+  <li><code>String name</code></li>
+  <li><code>String nationality</code></li>
+  <li><code>String speciality</code></li>
+  <li><code>int stars</code></li>
+</ol>
+Generate necessary getters and setters. [7 marks]
+</p>
+
+<p>Create class <code>co2103.hw1.domain.Restaurant</code>. With the following private fields:
+<ol>
+  <li><code>int id</code></li>
+  <li><code>String name</code></li>
+  <li><code>String owner</code></li>
+  <li><code>List&lt;Chef&gt; chefs</code></li>
+</ol>
+Generate necessary getters and setters. [6 marks]
+</p>
+
+
+<h2>Task 3: Controller (simple) [5 marks]</h2>
+<p>Create controller <code>co2103.hw1.controller.MainController</code> [2 marks].
+<ol>
+  <li>Requests for URL <code>"/"</code> (POST and GET) should show the view <code>start</code> (the corresponding JSP already exists). [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 4: Controller, View, and Form [20 marks]</h2>
+
+<p>Create field <code>public static List&lt;Restaurant&gt; restaurants</code> in class <code>co2103.hw1.Hw1Application</code>. Initialize the list inside class <code>co2103.hw1.Hw1Application</code> to contain one restaurant with two chefs. [4 marks]</p>
+
+<p>Create controller <code>co2103.hw1.controller.RestaurantController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/restaurants"</code> should show view <code>restaurants/list</code>. [2 marks]
+    <ul>
+      <li>Add the list of all restaurants from <code>co2103.hw1.Hw1Application</code> to the model as attribute <code>restaurants</code>. [2 marks]</li>
+      <li>Create the corresponding JSP to list the name and owner of each restaurant followed by a link to URL <code>"/chefs?restaurant={id of restaurant}"</code>, e.g., <code>"/chefs?restaurant=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/newRestaurant"</code> should show view <code>restaurants/form</code>. [3 marks] Create the corresponding JSP with a form with <code>modelAttribute="restaurant"</code> and <code>action="/addRestaurant"</code> and inputs for all fields of class <code>Restaurant</code> except for <code>chefs</code>. [5 marks]</li>
+  <li>POST requests for URL <code>"/addRestaurant"</code> should add a new restaurant to the list of all restaurants in <code>co2103.hw1.Hw1Application</code> and redirect to <code>/restaurants</code>. [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 5: Controller, View, and Form with additional Parameter [33 marks]</h2>
+
+<p>Create controller <code>co2103.hw1.controller.ChefController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/chefs"</code> should show view <code>chefs/list</code>. [2 marks]
+    <ul>
+      <li>Based on request parameter <code>restaurant</code> determine the corresponding restaurant from <code>co2103.hw1.Hw1Application</code>. [2 marks]</li>
+      <li>Add the list of all chefs of that restaurant to the model as attribute <code>chefs</code>. [2 marks]</li>
+      <li>Create the corresponding JSP for the view to list the name, nationality, speciality, and stars of each chef. [4 marks]</li>
+      <li>At the end of the list in the JSP add a link to URL <code>"/newChef?restaurant={id of restaurant whose chefs are listed}"</code>, e.g., <code>"/newChef?restaurant=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/newChef"</code> should show view <code>chefs/form</code>. [3 marks]
+    <ul>
+      <li>Create the corresponding JSP with a form with <code>modelAttribute="chef"</code> and <code>action="/addChef"</code> and inputs for all fields of class <code>Chef</code>. [6 marks]</li>
+      <li>Also add the request parameter <code>restaurant</code> with the ID of the current restaurant. [4 marks]</li>
+    </ul>
+  </li>
+  <li>POST requests for URL <code>"/addChef"</code> should add a new chef to the list of chefs of the restaurant identified by request parameter <code>restaurant</code> and then redirect to <code>/restaurants</code>. [6 marks]</li>
+</ol>
+</p>
+
+<h2>Task 6: Validation [25 marks]</h2>
+
+<p>Set up a validator for class <code>Restaurant</code> and make it available in controller <code>RestaurantController</code>. [4 marks]</p>
+<p>When adding a new restaurant validate that
+  <ol>
+    <li>The value of field <code>id</code> is unique within the list <code>Hw1Application.restaurants</code>. [3 marks]</li>
+    <li>The value of field <code>name</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>owner</code> is not empty. [2 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+
+<p>Set up a validator for class <code>Chef</code> and make it available in controller <code>ChefController</code>. [4 marks]</p>
+<p>When adding a new chef validate that
+  <ol>
+    <li>The value of field <code>name</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>nationality</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>speciality</code> is either <code>"Starters"</code>, <code>"Mains"</code>, or <code>"Desserts"</code>. [3 marks]</li>
+    <li>The value of field <code>stars</code> is between (including) 1 and 3. [3 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+</body>
+
+</html>
